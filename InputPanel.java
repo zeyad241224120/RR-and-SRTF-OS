@@ -4,41 +4,31 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-// ═══════════════════════════════════════════════
-//  FILE 2 — InputPanel.java
-//  المسؤول: الشخص الثاني
-//  الهدف:   واجهة الإدخال + التحقق من البيانات + الـ Scenarios
-// ═══════════════════════════════════════════════
-
 public class InputPanel extends JPanel {
 
-    // --- البيانات ---
+    
     private final List<Process>      processList     = new ArrayList<>();
     private final DefaultTableModel  inputTableModel;
 
-    // --- حقول الإدخال ---
     public  final JTextField pidField;
     public  final JTextField atField;
     public  final JTextField btField;
     public  final JTextField quantumField;
 
-    // --- Callback لتشغيل المحاكاة ---
     private final Runnable onSimulate;
-
-    // -----------------------------------------------
+    
     //  Constructor
-    // -----------------------------------------------
+    
     public InputPanel(Runnable onSimulate) {
         this.onSimulate = onSimulate;
         setLayout(new BorderLayout());
 
-        // تهيئة الحقول
+        
         pidField     = new JTextField(5);
         atField      = new JTextField(5);
         btField      = new JTextField(5);
         quantumField = new JTextField("2", 3);
 
-        // --- Panel العلوي: إضافة Process ---
         JPanel fields = new JPanel(new FlowLayout());
         fields.setBorder(BorderFactory.createTitledBorder("Add Process"));
 
@@ -57,7 +47,6 @@ public class InputPanel extends JPanel {
         fields.add(clearButton);
         fields.add(simButton);
 
-        // --- Panel السيناريوهات ---
         JPanel scenarioPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         scenarioPanel.setBorder(BorderFactory.createTitledBorder("Required Test Scenarios (A-E)"));
         String[] labels = {"A: Basic Mixed", "B: Quantum Sensitivity",
@@ -68,10 +57,8 @@ public class InputPanel extends JPanel {
             scenarioPanel.add(btn);
         }
 
-        // --- Table لعرض العمليات ---
         inputTableModel = new DefaultTableModel(new String[]{"PID", "Arrival Time", "Burst Time"}, 0);
 
-        // --- ربط الأزرار ---
         addButton.addActionListener(e -> addProcess());
         clearButton.addActionListener(e -> {
             processList.clear();
@@ -83,9 +70,6 @@ public class InputPanel extends JPanel {
         add(scenarioPanel, BorderLayout.SOUTH);
     }
 
-    // -----------------------------------------------
-    //  إضافة Process مع التحقق الكامل
-    // -----------------------------------------------
     public void addProcess() {
         try {
             String id = pidField.getText().trim();
@@ -123,9 +107,7 @@ public class InputPanel extends JPanel {
         }
     }
 
-    // -----------------------------------------------
-    //  تحميل السيناريوهات A→E
-    // -----------------------------------------------
+    
     public void handleScenario(String type) {
         processList.clear();
         inputTableModel.setRowCount(0);
@@ -154,9 +136,7 @@ public class InputPanel extends JPanel {
         onSimulate.run();
     }
 
-    // -----------------------------------------------
-    //  تحميل بيانات مباشرة
-    // -----------------------------------------------
+    
     private void load(Object[][] data, String q) {
         quantumField.setText(q);
         for (Object[] row : data) {
@@ -165,9 +145,7 @@ public class InputPanel extends JPanel {
         }
     }
 
-    // -----------------------------------------------
-    //  Getters للـ Main Frame
-    // -----------------------------------------------
+    
     public List<Process>     getProcessList()    { return processList;     }
     public DefaultTableModel getTableModel()     { return inputTableModel; }
     public String            getQuantumText()    { return quantumField.getText().trim(); }
