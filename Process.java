@@ -1,11 +1,5 @@
 import java.util.List;
 
-// ═══════════════════════════════════════════════
-//  FILE 1 — Process.java
-//  المسؤول: الشخص الأول
-//  الهدف:   كل الـ Data Models اللي البرنامج بيشتغل عليها
-// ═══════════════════════════════════════════════
-
 public class Process {
     public String id;
     public int arrivalTime, burstTime, remainingTime;
@@ -24,9 +18,6 @@ public class Process {
     }
 }
 
-// -----------------------------------------------
-//  Gantt Chart Segment — قطعة واحدة في الـ Gantt
-// -----------------------------------------------
 class GanttSegment {
     public String processId;
     public int startTime, endTime;
@@ -38,9 +29,7 @@ class GanttSegment {
     }
 }
 
-// -----------------------------------------------
-//  SimulationResult — نتيجة تشغيل أي خوارزمية
-// -----------------------------------------------
+
 class SimulationResult {
     public List<Process>     procs;
     public List<GanttSegment> gantt;
