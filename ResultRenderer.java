@@ -3,21 +3,13 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 
-// ═══════════════════════════════════════════════
-//  FILE 5 — ResultRenderer.java
-//  المسؤول: الشخص الخامس
-//  الهدف:   عرض النتائج + Gantt + Comparison + Conclusion
-// ═══════════════════════════════════════════════
-
 public class ResultRenderer {
 
-    // -----------------------------------------------
-    //  عرض نتائج خوارزمية واحدة (جدول + Gantt + Queue)
-    // -----------------------------------------------
+   
     public static void render(JPanel panel, SimulationResult res, String title, boolean showQueue) {
         panel.removeAll();
 
-        // --- بناء الجدول ---
+       
         String[] cols = {"PID", "Arrival", "Burst", "Completion", "Waiting Time", "Turnaround", "Response Time"};
         DefaultTableModel m = new DefaultTableModel(cols, 0);
         double sw = 0, st = 0, sr = 0;
@@ -32,20 +24,20 @@ public class ResultRenderer {
 
         int n = res.procs.size();
 
-        // --- Header يعرض المتوسطات ---
+        
         JLabel header = new JLabel(String.format(
             "<html><b>%s</b> &nbsp;|&nbsp; Avg WT: <b>%.2f</b> &nbsp;|&nbsp; Avg TAT: <b>%.2f</b> &nbsp;|&nbsp; Avg RT: <b>%.2f</b></html>",
             title, sw / n, st / n, sr / n));
         header.setBorder(BorderFactory.createEmptyBorder(6, 8, 6, 8));
         panel.add(header, BorderLayout.NORTH);
 
-        // --- المنتصف: الجدول + Queue Snapshots ---
+       
         JPanel center = new JPanel(new BorderLayout());
         JTable table  = new JTable(m);
         table.setRowHeight(24);
         center.add(new JScrollPane(table), BorderLayout.CENTER);
 
-        // عرض Ready Queue Snapshots (للـ Round Robin فقط)
+       
         if (showQueue && res.queueSnapshots != null && !res.queueSnapshots.isEmpty()) {
             JTextArea queueView = new JTextArea();
             queueView.setFont(new Font("Monospaced", Font.PLAIN, 12));
@@ -100,9 +92,9 @@ public class ResultRenderer {
         panel.repaint();
     }
 
-    // -----------------------------------------------
-    //  عرض جدول المقارنة بين الخوارزميتين
-    // -----------------------------------------------
+    
+    // view table compare between Algorithms 
+    
     public static void renderComparison(JPanel comparisonPanel, SimulationResult rr, SimulationResult srtf, int q) {
         comparisonPanel.removeAll();
 
@@ -151,9 +143,8 @@ public class ResultRenderer {
         comparisonPanel.repaint();
     }
 
-    // -----------------------------------------------
-    //  كتابة التحليل والاستنتاج النهائي
-    // -----------------------------------------------
+    
+    // final  Analysis and conclusion 
     public static void updateConclusion(JTextArea conclusionArea, SimulationResult rr, SimulationResult srtf, int q) {
         double rrWT  = rr.procs.stream().mapToInt(p -> p.waitingTime).average().orElse(0);
         double rrTAT = rr.procs.stream().mapToInt(p -> p.turnaroundTime).average().orElse(0);
