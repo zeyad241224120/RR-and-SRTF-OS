@@ -11,7 +11,12 @@ public class ResultRenderer {
 
        
         String[] cols = {"PID", "Arrival", "Burst", "Completion", "Waiting Time", "Turnaround", "Response Time"};
-        DefaultTableModel m = new DefaultTableModel(cols, 0);
+         DefaultTableModel m = new DefaultTableModel(cols, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         double sw = 0, st = 0, sr = 0;
 
         for (Process pr : res.procs) {
