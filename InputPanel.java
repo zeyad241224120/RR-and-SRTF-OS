@@ -57,7 +57,14 @@ public class InputPanel extends JPanel {
             scenarioPanel.add(btn);
         }
 
-        inputTableModel = new DefaultTableModel(new String[]{"PID", "Arrival Time", "Burst Time"}, 0);
+        inputTableModel = new DefaultTableModel(
+        new String[]{"PID", "Arrival Time", "Burst Time"}, 0) {
+
+       @Override
+       public boolean isCellEditable(int row, int column) {
+           return false;
+         }
+       };
 
         addButton.addActionListener(e -> addProcess());
         clearButton.addActionListener(e -> {
